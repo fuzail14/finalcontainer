@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:finalcontainer/bankb2.dart';
 import 'package:finalcontainer/containers_class.dart';
 import 'package:flutter/material.dart';
 
@@ -1045,7 +1046,6 @@ class _BankBClassState extends State<BankBClass> {
   bool varr = false;
   List<bool> newa = [];
   List<bool> newa2 = [];
-  
 
   // List of items in our dropdown menu
   var items = [
@@ -1081,7 +1081,6 @@ class _BankBClassState extends State<BankBClass> {
     "2.0"
   ];
 
-  var textvalue = 'Bank A';
   @override
   void dispose() {
     player.dispose();
@@ -1107,7 +1106,9 @@ class _BankBClassState extends State<BankBClass> {
             actions: [
               DropdownButton(
                 value: dropdownvalue,
-                icon: const Icon(Icons.keyboard_arrow_down),
+                icon: const Icon(
+                  Icons.keyboard_arrow_down,
+                ),
                 items: items.map((String items) {
                   return DropdownMenuItem(
                       value: items,
@@ -1129,47 +1130,135 @@ class _BankBClassState extends State<BankBClass> {
                   'TTM',
                   style: TextStyle(color: Colors.black),
                 ),
-                LiteRollingSwitch(
-                  width: MediaQuery.of(context).size.width * 0.250,
-                  textOn: 'BankB',
-                  textOff: 'BankA',
-                  colorOn: Colors.cyan,
-                  colorOff: Colors.grey,
-                  // iconOn: Icons.dark_mode,
-                  // iconOff: Icons.light_mode,
 
-                  animationDuration: Duration(milliseconds: 800),
-                  onChanged: (bool state) {
-                    print('turned ${(state) ? 'BankB' : 'BankA'}');
-                    setState(() {
-                      bank = state;
-                    });
+                GestureDetector(
+                  onTap: () {
+                    Get.to(BankB2Class());
                   },
-                  onTap: () {},
-                  onDoubleTap: () {},
-                  onSwipe: () {},
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.250,
+                        height: MediaQuery.of(context).size.height * 0.050,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.grey),
+                      ),
+                      Positioned(
+                          left: MediaQuery.of(context).size.width * 0.010,
+                          top: MediaQuery.of(context).size.height * 0.014,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.050,
+                            height: MediaQuery.of(context).size.height * 0.010,
+                            decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(100)),
+                            child: Icon(
+                              Icons.flag,
+                              
+                            ),
+                          )),
+                      Positioned(
+                          left: MediaQuery.of(context).size.width * 0.080,
+                          top: MediaQuery.of(context).size.height * 0.015,
+                          child: Center(
+                            child: Text(
+                              "Bank A",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          )),
+                    ],
+                  ),
                 ),
-                LiteRollingSwitch(
-                  value: true,
-                  width: MediaQuery.of(context).size.width * 0.250,
-                  textOn: 'Mode',
-                  textOff: 'Mode',
-                  colorOn: Colors.cyan,
-                  colorOff: Colors.grey,
-                  iconOn: Icons.dark_mode,
-                  iconOff: Icons.light_mode,
-                  animationDuration: Duration(milliseconds: 800),
-                  onChanged: (bool state) {
-                    print('turned ${(state) ? 'Bank B' : 'Bank A'}');
-                    setState(() {
-                      isTheme = state;
-                      Get.to(ContainersClass());
-                    });
+
+                // LiteRollingSwitch(
+                //   value: bank,
+                //   width: MediaQuery.of(context).size.width * 0.250,
+                //   textOn: 'BankB',
+                //   textOff: 'BankA',
+                //   colorOn: Colors.cyan,
+                //   colorOff: Colors.grey,
+                //   // iconOn: Icons.dark_mode,
+                //   // iconOff: Icons.light_mode,
+
+                //   animationDuration: Duration(milliseconds: 800),
+                //   onChanged: (bool state) {
+                //     print('turned ${(state) ? 'BankB' : 'BankA'}');
+
+                //       bank = state;
+                //       Get.to(BankB2Class());
+
+                //   },
+                //   onTap: () {},
+                //   onDoubleTap: () {},
+                //   onSwipe: () {},
+                // ),
+
+                GestureDetector(
+                  onTap: () {
+                    isTheme = true;
+                    Get.to(ContainersClass());
                   },
-                  onTap: () {},
-                  onDoubleTap: () {},
-                  onSwipe: () {},
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.250,
+                        height: MediaQuery.of(context).size.height * 0.050,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.black),
+                      ),
+                      Positioned(
+                         right: MediaQuery.of(context).size.width * 0.025,
+                          top: MediaQuery.of(context).size.height * 0.014,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.050,
+                            height: MediaQuery.of(context).size.height * 0.010,
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(100)),
+                            child: Icon(
+                              Icons.dark_mode,
+                              
+                            ),
+                          )),
+                      Positioned(
+                          left: MediaQuery.of(context).size.width * 0.030,
+                          top: MediaQuery.of(context).size.height * 0.015,
+                          child: Center(
+                            child: Text(
+                              "Mode",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          )),
+                    ],
+                  ),
                 ),
+
+                // LiteRollingSwitch(
+                //   value: true,
+                //   width: MediaQuery.of(context).size.width * 0.250,
+                //   textOn: 'Mode',
+                //   textOff: 'Mode',
+                //   colorOn: Colors.cyan,
+                //   colorOff: Colors.grey,
+                //   iconOn: Icons.dark_mode,
+                //   iconOff: Icons.light_mode,
+                //   animationDuration: Duration(milliseconds: 800),
+                //   onChanged: (bool state) {
+                //     print('turned ${(state) ? 'Bank B' : 'Bank A'}');
+
+                //     isTheme = state;
+                //     Get.to(ContainersClass());
+                //   },
+                //   onTap: () {},
+                //   onDoubleTap: () {},
+                //   onSwipe: () {},
+                // ),
               ],
             ),
             leading: isTheme
@@ -1203,7 +1292,6 @@ class _BankBClassState extends State<BankBClass> {
                           for (int i = 0; i < data2.length; i++) {
                             newa.add(false);
                             newa2.add(false);
-                            
                           }
 
                           print('we are in bank b');
@@ -1213,12 +1301,10 @@ class _BankBClassState extends State<BankBClass> {
 
                                 newa.clear();
                                 newa2.clear();
-                                
 
                                 for (int i = 0; i < data2.length; i++) {
                                   newa.add(false);
                                   newa2.add(false);
-                                  
                                 }
 
                                 //setState(() {});
@@ -1239,14 +1325,13 @@ class _BankBClassState extends State<BankBClass> {
                                     print(newa.length);
                                     newa.removeWhere((element) => false);
 
-
                                     newa2[index] = data2[index]['selection'];
 
                                     print(newa2[index]);
                                     print(newa2);
                                     print(newa2.length);
                                     newa2.removeWhere((element) => false);
-                                    
+
                                     setState(() {});
 
                                     // player.pause();
@@ -1272,14 +1357,12 @@ class _BankBClassState extends State<BankBClass> {
                                     print(newa.length);
                                     newa.removeWhere((element) => false);
 
-
                                     newa2[index] = data2[index]['selection'];
 
                                     print(newa2[index]);
                                     print(newa2);
                                     print(newa2.length);
                                     newa2.removeWhere((element) => false);
-                                    
 
                                     setState(() {});
 
@@ -1295,8 +1378,6 @@ class _BankBClassState extends State<BankBClass> {
                                         double.parse(dropdownvalue);
                                     player.setPlaybackRate(speedofsong);
 
-                                    
-
                                     print('play');
                                   }
                                 } else if (!data2[index]['selection2']) {
@@ -1308,20 +1389,22 @@ class _BankBClassState extends State<BankBClass> {
                                   // dispose();
                                 }
                               },
-                               child: Stack(
+                              child: Stack(
                                 children: [
-                                  (bank==false)?
-                                  
-                                  Container(
-                                    child: Image.asset(
-                                      data2[index]['img1'].toString().trim(),
-                                    ),
-                                  ): Container(
-                                    child: Image.asset(
-                                      data2[index]['img1'].toString().trim(),)
-                                    ),
-
-                                  
+                                  (bank == false)
+                                      ? Container(
+                                          child: Image.asset(
+                                            data2[index]['img1']
+                                                .toString()
+                                                .trim(),
+                                          ),
+                                        )
+                                      : Container(
+                                          child: Image.asset(
+                                          data2[index]['img1']
+                                              .toString()
+                                              .trim(),
+                                        )),
 
                                   if (newa[index]) ...[
                                     Image.asset(
@@ -1329,11 +1412,11 @@ class _BankBClassState extends State<BankBClass> {
                                     )
                                   ],
 
-                                   if (newa2[index] && bank==true) ...[
-                                    Image.asset(
-                                      data2[index]['gold'].toString().trim(),
-                                    )
-                                  ] 
+                                  //  if (newa2[index] && bank==true) ...[
+                                  //   Image.asset(
+                                  //     data2[index]['gold'].toString().trim(),
+                                  //   )
+                                  // ]
 
                                   // newa[index]
                                   //     ? Image.asset(
@@ -1348,7 +1431,6 @@ class _BankBClassState extends State<BankBClass> {
                                   // ):Container()
                                 ],
                               ));
-                       
                         }
                         // return GestureDetector(
                         //     onTap: () async {

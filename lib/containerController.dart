@@ -1,10 +1,12 @@
 
-// import 'package:get/get.dart';
+import 'package:get/get.dart';
 
-// class containerController extends GetxController {
-//   var flag = true.obs;
-//   var cflag = true.obs;
-//   RxList check1=<RxBool> [].obs;
+class containerController extends GetxController {
+  var flag = true.obs;
+  var cflag = true.obs;
+  RxList check1=<RxBool> [].obs;
+
+  
 
 //   // List<Map<String,dynamic>> data=[
 //   //   { "id":1,
@@ -57,4 +59,4 @@
 
 //   // setChecks()=> check1 = RxList<bool>.filled(data.length, false);
 //   // setFlag() => flag.value = !flag.value;
-// }
+ }

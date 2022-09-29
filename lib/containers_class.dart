@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:finalcontainer/banka2.dart';
 import 'package:finalcontainer/bankb.dart';
+import 'package:finalcontainer/main.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -30,7 +31,7 @@ class _ContainersClassState extends State<ContainersClass> {
   double min = 0;
   double sed = 0;
   List<int> i = [];
-  List<Map<String, dynamic>> data = [
+ List<Map<String, dynamic>> data = [
     {
       "id": 1,
       "img1": "assets/img1.png",
@@ -2099,9 +2100,31 @@ class _ContainersClassState extends State<ContainersClass> {
 
   bool ismusic = false;
   bool bank = false;
+  var iconposition;
+  var icon;
+  var text;
+  var color;
+  var arguments = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
+    arguments ??= '';
+
+    if (arguments == '') {
+      iconposition = MediaQuery.of(context).size.width * 0.010;
+      icon = Icons.flag;
+      text = 'Bank A';
+      color = Colors.grey;
+    } else {
+      
+      bank = arguments[0];
+      iconposition = arguments[1];
+      icon = arguments[2];
+      
+      text = arguments[3];
+      color = arguments[4];
+      
+    }
     return SafeArea(
       child: Scaffold(
           backgroundColor: isTheme ? Colors.black : Colors.white,
@@ -2126,11 +2149,23 @@ class _ContainersClassState extends State<ContainersClass> {
             ],
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              
+              
+
               children: [
-                Text(
-                  'TTM',
-                  style: TextStyle(color: Colors.black),
+                Column(
+                  children: [
+                    Text(
+                      'PMØS',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                      Text(
+                      '_100™️',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
                 ),
+              
                 GestureDetector(
                   onTap: () {
                     bank = true;
@@ -2139,24 +2174,23 @@ class _ContainersClassState extends State<ContainersClass> {
                   child: Stack(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.270,
+                        width: MediaQuery.of(context).size.width * 0.250,
                         height: MediaQuery.of(context).size.height * 0.050,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
-                            color: Colors.grey),
+                            color: color),
                       ),
                       Positioned(
-                          left: MediaQuery.of(context).size.width * 0.010,
+                          left: iconposition,
                           top: MediaQuery.of(context).size.height * 0.014,
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.050,
                             height: MediaQuery.of(context).size.height * 0.008,
                             decoration: BoxDecoration(
-                                color: Colors.grey,
+                                //color: Colors.grey,
                                 borderRadius: BorderRadius.circular(100)),
                             child: Icon(
-                              Icons.flag,
-                              
+                              icon,
                             ),
                           )),
                       Positioned(
@@ -2164,7 +2198,7 @@ class _ContainersClassState extends State<ContainersClass> {
                           top: MediaQuery.of(context).size.height * 0.015,
                           child: Center(
                             child: Text(
-                              "Bank A",
+                              text,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
@@ -2173,7 +2207,7 @@ class _ContainersClassState extends State<ContainersClass> {
                     ],
                   ),
                 ),
-
+      
                 // LiteRollingSwitch(
                 //   width: MediaQuery.of(context).size.width * 0.250,
                 //   textOn: 'BankB',
@@ -2182,7 +2216,7 @@ class _ContainersClassState extends State<ContainersClass> {
                 //   colorOff: Colors.grey,
                 //   // iconOn: Icons.dark_mode,
                 //   // iconOff: Icons.light_mode,
-
+      
                 //   animationDuration: Duration(milliseconds: 800),
                 //   onChanged: (bool state) {
                 //     print('turned ${(state) ? 'BankB' : 'BankA'}');
@@ -2195,37 +2229,37 @@ class _ContainersClassState extends State<ContainersClass> {
                 //   onDoubleTap: () {},
                 //   onSwipe: () {},
                 // ),
-
+      
                 GestureDetector(
                   onTap: () {
                     isTheme = false;
-                    Get.to(BankBClass());
+                    Get.to(BankBClass(),
+                        arguments: [bank, iconposition, icon, text, color]);
                   },
                   child: Stack(
                     children: [
                       Container(
-                         width: MediaQuery.of(context).size.width * 0.250,
+                        width: MediaQuery.of(context).size.width * 0.230,
                         height: MediaQuery.of(context).size.height * 0.050,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
                             color: Colors.grey),
                       ),
                       Positioned(
-                           left: MediaQuery.of(context).size.width * 0.010,
+                          left: MediaQuery.of(context).size.width * 0.010,
                           top: MediaQuery.of(context).size.height * 0.014,
                           child: Container(
-                             width: MediaQuery.of(context).size.width * 0.050,
+                            width: MediaQuery.of(context).size.width * 0.050,
                             height: MediaQuery.of(context).size.height * 0.010,
                             decoration: BoxDecoration(
                                 color: Colors.grey,
                                 borderRadius: BorderRadius.circular(100)),
                             child: Icon(
                               Icons.light_mode,
-                              
                             ),
                           )),
                       Positioned(
-                        left: MediaQuery.of(context).size.width * 0.090,
+                          left: MediaQuery.of(context).size.width * 0.090,
                           top: MediaQuery.of(context).size.height * 0.015,
                           child: Center(
                             child: Text(
@@ -2238,7 +2272,7 @@ class _ContainersClassState extends State<ContainersClass> {
                     ],
                   ),
                 ),
-
+      
                 // LiteRollingSwitch(
                 //   width: MediaQuery.of(context).size.width * 0.250,
                 //   textOn: 'Mode',
@@ -2263,11 +2297,11 @@ class _ContainersClassState extends State<ContainersClass> {
             ),
             leading: isTheme
                 ? Image.asset(
-                    'assets/b.jpeg',
+                    'assets/a.jpeg',
                     fit: BoxFit.contain,
                   )
                 : Image.asset(
-                    'assets/a.jpeg',
+                    'assets/b.jpeg',
                     fit: BoxFit.contain,
                   ),
             backgroundColor: Colors.white,
@@ -2293,21 +2327,21 @@ class _ContainersClassState extends State<ContainersClass> {
                             newa.add(false);
                             newa2.add(false);
                           }
-
+      
                           // if (isTheme == true) {
                           //   print('we are in bank b');
                           //   return GestureDetector(
                           //       onTap: () {
                           //         print('data2   $data');
-
+      
                           //         newa.clear();
-
+      
                           //         for (int i = 0; i < data2.length; i++) {
                           //           newa.add(false);
                           //         }
-
+      
                           //         //setState(() {});
-
+      
                           //         print("-----------");
                           //         print(date.millisecond);
                           //         print("-----------");
@@ -2316,66 +2350,66 @@ class _ContainersClassState extends State<ContainersClass> {
                           //         if (data2[index]['selection']) {
                           //           if (bank==false) {
                           //             print('bank A ki Audio....');
-
+      
                           //             newa[index] = data2[index]['selection'];
-
+      
                           //             print(newa[index]);
                           //             print(newa);
                           //             print(newa.length);
                           //             newa.removeWhere((element) => false);
-
+      
                           //             setState(() {});
-
+      
                           //             // player.pause();
                           //             var path =
                           //                 'assets/' + data2[index]['bankaudio1'];
                           //             print(path);
-
+      
                           //             player.play(AssetSource(
                           //                 data2[index]['bankaudio1']));
-
+      
                           //             var speedofsong =
                           //                 double.parse(dropdownvalue);
                           //             player.setPlaybackRate(speedofsong);
-
+      
                           //             print('play');
-
+      
                           //           }
-
+      
                           //           else{
-
+      
                           //             print('bank B ki Audio....');
-
+      
                           //             newa[index] = data2[index]['selection'];
-
+      
                           //             print(newa[index]);
                           //             print(newa);
                           //             print(newa.length);
                           //             newa.removeWhere((element) => false);
-
+      
                           //             setState(() {});
-
+      
                           //             // player.pause();
                           //             var path =
                           //                 'assets/' + data2[index]['bankaudio2'];
                           //             print(path);
-
+      
                           //             player.play(AssetSource(
                           //                 data2[index]['bankaudio2']));
-
+      
                           //             var speedofsong =
                           //                 double.parse(dropdownvalue);
                           //             player.setPlaybackRate(speedofsong);
-
+      
                           //             print('play');
-
+      
                           //           }
-
+      
                           //         } else if (!data2[index]['selection2']) {
                           //           newa[index] = false;
-
+      
                           //           player.dispose();
-
+      
                           //           // dispose();
                           //         }
                           //       },
@@ -2395,7 +2429,7 @@ class _ContainersClassState extends State<ContainersClass> {
                           //                   )
                           //                 : Container()
                           //           ]
-
+      
                           //           // else ...[
                           //           //   Container(
                           //           //     child: Image.asset(
@@ -2412,7 +2446,7 @@ class _ContainersClassState extends State<ContainersClass> {
                           //           //         )
                           //           //       : Container()
                           //           // ]
-
+      
                           //           //BLUE LINE
                           //           // Positioned(
                           //           //   left:pos,
@@ -2429,14 +2463,14 @@ class _ContainersClassState extends State<ContainersClass> {
                               onTap: () async {
                                 newa.clear();
                                 newa2.clear();
-
+      
                                 for (int i = 0; i < data.length; i++) {
                                   newa.add(false);
                                   newa2.add(false);
                                 }
                                 print(newa);
                                 print(newa2);
-
+      
                                 print('we are in bank a');
                                 setState(() {});
                                 print("-----------");
@@ -2444,14 +2478,14 @@ class _ContainersClassState extends State<ContainersClass> {
                                 print("-----------");
                                 data[index]['selection'] =
                                     !data[index]['selection'];
-
+      
                                 if (data[index]['selection']) {
                                   if (bank) {
                                     print('bank B ki Audio....');
-
+      
                                     newa[index] = data[index]['selection'];
                                     newa2[index] = data[index]['selection'];
-
+      
                                     print(newa[index]);
                                     print(newa);
                                     print(newa.length);
@@ -2460,28 +2494,35 @@ class _ContainersClassState extends State<ContainersClass> {
                                     print(newa2);
                                     print(newa2.length);
                                     newa2.removeWhere((element) => false);
-
-                                    setState(() {});
-
+                                    
+                                    
+      
+                                    setState(() {
+      
+                                      newa[index]=false;
+                                    });
+      
                                     // player.pause();
                                     var path =
                                         'assets/' + data[index]['bankaudio2'];
                                     print(path);
-
+      
                                     player.play(
                                         AssetSource(data[index]['bankaudio2']));
-
+      
                                     var speedofsong =
                                         double.parse(dropdownvalue);
                                     player.setPlaybackRate(speedofsong);
-
+      
+                                    
+      
                                     print('play');
                                   } else {
                                     print('bank A ki Audio....');
-
+      
                                     newa[index] = data[index]['selection'];
                                     newa2[index] = data[index]['selection'];
-
+      
                                     print(newa[index]);
                                     print(newa);
                                     print(newa.length);
@@ -2490,81 +2531,90 @@ class _ContainersClassState extends State<ContainersClass> {
                                     print(newa2);
                                     print(newa2.length);
                                     newa2.removeWhere((element) => false);
-
-                                    setState(() {});
-
+      
+                                    
+      
                                     // player.pause();
                                     var path =
                                         'assets/' + data[index]['bankaudio1'];
                                     print(path);
-
+      
                                     player.play(
                                         AssetSource(data[index]['bankaudio1']));
-
+      
                                     var speedofsong =
                                         double.parse(dropdownvalue);
                                     player.setPlaybackRate(speedofsong);
-
+      
+                                    
+      
+                                   
+      
+                                    setState(() { });
+      
+                                  Timer(Duration(milliseconds: 600),  Dummy);
+                                    
+      
                                     print('play');
                                   }
-
+      
                                   // //varr = !varr;
-
+      
                                   // newa[index] = data[index]['selection'];
-
+      
                                   // print('numberrr ${data[index]['selection']}');
-
+      
                                   // print(newa[index]);
                                   // print(newa);
                                   // print(newa.length);
-
+      
                                   // newa.removeWhere((element) => false);
                                   // var path =
                                   //     'assets/' + data[index]['bankaudio1'];
                                   // print(path);
-
+      
                                   // //var speedofsong = double.parse(dropdownvalue);
                                   // // audioPlayer.setPlaybackRate(speedofsong);
-
+      
                                   // // audioPlayer.open(Audio(path),
                                   // //     playSpeed: speedofsong);
-
+      
                                   // // audioPlayer.play();
-
+      
                                   // // print(path);
-
+      
                                   // // setState(() {});
-
+      
                                   // // player.pause();
-
+      
                                   // player.play(
                                   //   AssetSource(
                                   //     data[index]['bankaudio1'],
                                   //   ),
                                   // );
-
+      
                                   // var speedofsong = double.parse(dropdownvalue);
                                   // player.setPlaybackRate(speedofsong);
-
+      
                                   // ismusic = true;
                                   // Timer(Duration(seconds: 3),
                                   //     () => newa[index] = false);
-
+      
                                   // setState(() {});
-
+      
                                   // print('play');
                                 } else if (!data[index]['selection']) {
                                   newa[index] = false;
                                   newa2[index] = false;
-
+      
                                   // print(data[index]['id']);
                                   // print(data[index]['audio']);
                                   // print(data[index]['selection']);
                                   // print(data[index]['position']);
-
+      
                                   print('pause');
                                   player.dispose();
-
+      
                                   // ispose();
                                 }
                               },
@@ -2582,25 +2632,25 @@ class _ContainersClassState extends State<ContainersClass> {
                                           child: Image.asset(
                                           data[index]['img2'].toString().trim(),
                                         )),
-
+      
                                   if (newa[index]) ...[
                                     Image.asset(
                                       data[index]['blue'].toString().trim(),
                                     )
                                   ],
-
+      
                                   //  if (newa2[index] && bank==true) ...[
                                   //   Image.asset(
                                   //     data[index]['gold'].toString().trim(),
                                   //   )
                                   // ]
-
+      
                                   // newa[index]
                                   //     ? Image.asset(
                                   //         data[index]['blue'].toString().trim(),
                                   //       )
                                   //     : Container(),
-
+      
                                   //     ismusic ?  Container(
                                   //   child: Image.asset(
                                   //     data[index]['img2'].toString().trim(),
@@ -2613,5 +2663,11 @@ class _ContainersClassState extends State<ContainersClass> {
             ),
           )),
     );
+  }
+   Dummy() async{
+    print('drop down val before navigationing.....$dropdownvalue ');
+
+  Get.offAll(ContainersClass());
+
   }
 }

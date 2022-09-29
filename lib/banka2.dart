@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:finalcontainer/bankb.dart';
+import 'package:finalcontainer/bankb2.dart';
 import 'package:finalcontainer/containers_class.dart';
 import 'package:flutter/material.dart';
 
@@ -1099,6 +1100,11 @@ class BankA2ClassState extends State<BankA2Class> {
 
   @override
   Widget build(BuildContext context) {
+    var iconposition = MediaQuery.of(context).size.width * 0.025;
+
+    var text = 'Bank B';
+    var icon = Icons.done;
+    var color = Colors.blue;
     return SafeArea(
       child: Scaffold(
           backgroundColor: isTheme ? Colors.black : Colors.white,
@@ -1123,47 +1129,53 @@ class BankA2ClassState extends State<BankA2Class> {
             ],
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              
               children: [
-                Text(
-                  'TTM',
-                  style: TextStyle(color: Colors.black),
+                Column(
+                  children: [
+                    Text(
+                      'PMØS',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    Text(
+                      '_100™️',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
                 ),
 
                 GestureDetector(
                   onTap: () {
-                    bank = true;
+                    //bank = true;
                     Get.to(ContainersClass());
                   },
                   child: Stack(
                     children: [
                       Container(
-                          width: MediaQuery.of(context).size.width * 0.260,
+                        width: MediaQuery.of(context).size.width * 0.250,
                         height: MediaQuery.of(context).size.height * 0.050,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
-                            color: Colors.blue),
+                            color: color),
                       ),
                       Positioned(
-                           right: MediaQuery.of(context).size.width * 0.025,
+                          left: iconposition,
                           top: MediaQuery.of(context).size.height * 0.014,
                           child: Container(
-                           width: MediaQuery.of(context).size.width * 0.050,
-                            
-
+                            width: MediaQuery.of(context).size.width * 0.050,
                             decoration: BoxDecoration(
                                 color: Colors.blue,
                                 borderRadius: BorderRadius.circular(100)),
                             child: Icon(
-                              Icons.done,
-                              
+                              icon,
                             ),
                           )),
                       Positioned(
-                           left: MediaQuery.of(context).size.width * 0.020,
+                          left: MediaQuery.of(context).size.width * 0.080,
                           top: MediaQuery.of(context).size.height * 0.015,
                           child: Center(
                             child: Text(
-                              "Bank B",
+                              text,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
@@ -1200,19 +1212,26 @@ class BankA2ClassState extends State<BankA2Class> {
                 GestureDetector(
                   onTap: () {
                     isTheme = false;
-                    Get.to(BankBClass());
+
+                    if (text == 'Bank A') {
+                      Get.to(BankBClass(),
+                          arguments: [bank, iconposition, icon, text, color]);
+                    } else if (text == 'Bank B') {
+                      Get.to(BankB2Class(),
+                          arguments: [bank, iconposition, icon, text, color]);
+                    }
                   },
                   child: Stack(
                     children: [
                       Container(
-                            width: MediaQuery.of(context).size.width * 0.250,
+                        width: MediaQuery.of(context).size.width * 0.230,
                         height: MediaQuery.of(context).size.height * 0.050,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
                             color: Colors.grey),
                       ),
                       Positioned(
-                        left: MediaQuery.of(context).size.width * 0.010,
+                          left: MediaQuery.of(context).size.width * 0.010,
                           top: MediaQuery.of(context).size.height * 0.014,
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.050,
@@ -1222,7 +1241,6 @@ class BankA2ClassState extends State<BankA2Class> {
                                 borderRadius: BorderRadius.circular(100)),
                             child: Icon(
                               Icons.light_mode,
-                              
                             ),
                           )),
                       Positioned(
@@ -1264,11 +1282,11 @@ class BankA2ClassState extends State<BankA2Class> {
             ),
             leading: isTheme
                 ? Image.asset(
-                    'assets/b.jpeg',
+                    'assets/a.jpeg',
                     fit: BoxFit.contain,
                   )
                 : Image.asset(
-                    'assets/a.jpeg',
+                    'assets/b.jpeg',
                     fit: BoxFit.contain,
                   ),
             backgroundColor: Colors.white,
@@ -1477,6 +1495,8 @@ class BankA2ClassState extends State<BankA2Class> {
                                     player.setPlaybackRate(speedofsong);
 
                                     print('play');
+
+                                    Timer(Duration(milliseconds: 400), Dummy);
                                   } else {
                                     print('bank A ki Audio....');
 
@@ -1505,6 +1525,10 @@ class BankA2ClassState extends State<BankA2Class> {
                                     var speedofsong =
                                         double.parse(dropdownvalue);
                                     player.setPlaybackRate(speedofsong);
+
+                                    setState(() {});
+
+                                    Timer(Duration(milliseconds: 600), Dummy);
 
                                     print('play');
                                   }
@@ -1614,5 +1638,9 @@ class BankA2ClassState extends State<BankA2Class> {
             ),
           )),
     );
+  }
+
+  Dummy() {
+    Get.offAll(BankA2Class());
   }
 }

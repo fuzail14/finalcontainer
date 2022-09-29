@@ -1094,11 +1094,35 @@ class _BankBClassState extends State<BankBClass> {
     //getData();
   }
 
+  var arguments = Get.arguments;
+
   bool ismusic = false;
   bool bank = false;
+  var iconposition;
+  var icon;
+  var text;
+  var color;
+  
 
   @override
   Widget build(BuildContext context) {
+    
+    
+    bank = arguments[0];
+    iconposition = arguments[1];
+    icon = arguments[2];
+    text = arguments[3];
+    color = arguments[4];
+
+    // if(text == 'Bank B'){
+
+    //   Get.to(BankB2Class(),arguments: [bank,iconposition,icon,text,color]);
+    // }
+    // else
+    
+    
+    print('bankbbbbb $bank');
+    
     return SafeArea(
       child: Scaffold(
           backgroundColor: isTheme ? Colors.black : Colors.white,
@@ -1126,10 +1150,19 @@ class _BankBClassState extends State<BankBClass> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'TTM',
-                  style: TextStyle(color: Colors.black),
+                  Column(
+                  children: [
+                    Text(
+                      'PMØS',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                      Text(
+                      '_100™️',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
                 ),
+              
 
                 GestureDetector(
                   onTap: () {
@@ -1142,19 +1175,19 @@ class _BankBClassState extends State<BankBClass> {
                         height: MediaQuery.of(context).size.height * 0.050,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
-                            color: Colors.grey),
+                            color: color),
                       ),
                       Positioned(
-                          left: MediaQuery.of(context).size.width * 0.010,
+                          left: iconposition,
                           top: MediaQuery.of(context).size.height * 0.014,
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.050,
                             height: MediaQuery.of(context).size.height * 0.010,
                             decoration: BoxDecoration(
-                                color: Colors.grey,
+                                //color: Colors.blue,
                                 borderRadius: BorderRadius.circular(100)),
                             child: Icon(
-                              Icons.flag,
+                              icon,
                               
                             ),
                           )),
@@ -1163,7 +1196,7 @@ class _BankBClassState extends State<BankBClass> {
                           top: MediaQuery.of(context).size.height * 0.015,
                           child: Center(
                             child: Text(
-                              "Bank A",
+                              text,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
@@ -1199,12 +1232,12 @@ class _BankBClassState extends State<BankBClass> {
                 GestureDetector(
                   onTap: () {
                     isTheme = true;
-                    Get.to(ContainersClass());
+                    Get.to(ContainersClass(), arguments: [bank, iconposition, icon, text, color]);
                   },
                   child: Stack(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.250,
+                        width: MediaQuery.of(context).size.width * 0.230,
                         height: MediaQuery.of(context).size.height * 0.050,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
@@ -1263,11 +1296,11 @@ class _BankBClassState extends State<BankBClass> {
             ),
             leading: isTheme
                 ? Image.asset(
-                    'assets/b.jpeg',
+                    'assets/a.jpeg',
                     fit: BoxFit.contain,
                   )
                 : Image.asset(
-                    'assets/a.jpeg',
+                    'assets/b.jpeg',
                     fit: BoxFit.contain,
                   ),
             backgroundColor: Colors.white,
@@ -1346,6 +1379,13 @@ class _BankBClassState extends State<BankBClass> {
                                         double.parse(dropdownvalue);
                                     player.setPlaybackRate(speedofsong);
 
+                                    setState(() {
+                                      
+                                    });
+
+                                      Timer(Duration(milliseconds: 600),  Dummy);
+                                        
+
                                     print('play');
                                   } else {
                                     print('bank B ki Audio....');
@@ -1377,6 +1417,15 @@ class _BankBClassState extends State<BankBClass> {
                                     var speedofsong =
                                         double.parse(dropdownvalue);
                                     player.setPlaybackRate(speedofsong);
+
+                                    setState(() {
+                                      
+                                    });
+ 
+
+                                      Timer(Duration(milliseconds: 400),  Dummy);
+
+                                        
 
                                     print('play');
                                   }
@@ -1605,5 +1654,10 @@ class _BankBClassState extends State<BankBClass> {
             ),
           )),
     );
+  }
+
+  Dummy(){
+
+    Get.offAll(BankBClass(),arguments: arguments);
   }
 }

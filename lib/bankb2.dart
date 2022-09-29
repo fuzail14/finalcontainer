@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:finalcontainer/banka2.dart';
 import 'package:finalcontainer/bankb.dart';
 import 'package:finalcontainer/containers_class.dart';
 import 'package:flutter/material.dart';
@@ -1096,6 +1097,8 @@ class BankB2ClassState extends State<BankB2Class> {
 
   bool ismusic = true;
   bool bank = true;
+  var arguments = Get.arguments;
+  var textb = "Bank B";
 
   @override
   Widget build(BuildContext context) {
@@ -1126,44 +1129,59 @@ class BankB2ClassState extends State<BankB2Class> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'TTM',
-                  style: TextStyle(color: Colors.black),
+                Column(
+                  children: [
+                    Text(
+                      'PMØS',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    Text(
+                      '_100™️',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
                 ),
 
                 GestureDetector(
                   onTap: () {
-                    Get.to(BankBClass());
+                    var bank = false;
+                    var iconposition =
+                        MediaQuery.of(context).size.width * 0.010;
+                    var icon = Icons.flag;
+                    var text = 'Bank A';
+                    var color = Colors.grey;
+
+                    Get.to(BankBClass(),
+                        arguments: [bank, iconposition, icon, text, color]);
                   },
                   child: Stack(
                     children: [
                       Container(
-                           width: MediaQuery.of(context).size.width * 0.250,
+                        width: MediaQuery.of(context).size.width * 0.250,
                         height: MediaQuery.of(context).size.height * 0.050,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
                             color: Colors.blue),
                       ),
                       Positioned(
-                          right: MediaQuery.of(context).size.width * 0.010,
+                          left: MediaQuery.of(context).size.width * 0.010,
                           top: MediaQuery.of(context).size.height * 0.014,
                           child: Container(
-                           width: MediaQuery.of(context).size.width * 0.050,
+                            width: MediaQuery.of(context).size.width * 0.050,
                             height: MediaQuery.of(context).size.height * 0.010,
                             decoration: BoxDecoration(
                                 color: Colors.blue,
                                 borderRadius: BorderRadius.circular(100)),
                             child: Icon(
                               Icons.done,
-                              
                             ),
                           )),
                       Positioned(
-                             left: MediaQuery.of(context).size.width * 0.030,
+                          left: MediaQuery.of(context).size.width * 0.080,
                           top: MediaQuery.of(context).size.height * 0.015,
                           child: Center(
                             child: Text(
-                              "Bank B",
+                              textb,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
@@ -1198,29 +1216,31 @@ class BankB2ClassState extends State<BankB2Class> {
 
                 GestureDetector(
                   onTap: () {
-                    Get.to(ContainersClass());
+                    if (textb == "Bank B") {
+                      Get.to(BankA2Class());
+                    } else
+                      Get.to(ContainersClass(), arguments: arguments);
                   },
                   child: Stack(
                     children: [
                       Container(
-                         width: MediaQuery.of(context).size.width * 0.250,
+                        width: MediaQuery.of(context).size.width * 0.230,
                         height: MediaQuery.of(context).size.height * 0.050,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
                             color: Colors.black),
                       ),
                       Positioned(
-                            right: MediaQuery.of(context).size.width * 0.025,
+                          right: MediaQuery.of(context).size.width * 0.025,
                           top: MediaQuery.of(context).size.height * 0.014,
                           child: Container(
-                                     width: MediaQuery.of(context).size.width * 0.050,
+                            width: MediaQuery.of(context).size.width * 0.050,
                             height: MediaQuery.of(context).size.height * 0.010,
                             decoration: BoxDecoration(
                                 color: Colors.black,
                                 borderRadius: BorderRadius.circular(100)),
                             child: Icon(
                               Icons.dark_mode,
-                              
                             ),
                           )),
                       Positioned(
@@ -1345,6 +1365,9 @@ class BankB2ClassState extends State<BankB2Class> {
                                         double.parse(dropdownvalue);
                                     player.setPlaybackRate(speedofsong);
 
+                                    setState(() {});
+                                    Timer(Duration(milliseconds: 400), Dummy);
+
                                     print('play');
                                   } else {
                                     print('bank B ki Audio....');
@@ -1376,6 +1399,9 @@ class BankB2ClassState extends State<BankB2Class> {
                                     var speedofsong =
                                         double.parse(dropdownvalue);
                                     player.setPlaybackRate(speedofsong);
+
+                                    setState(() {});
+                                    Timer(Duration(milliseconds: 600), Dummy);
 
                                     print('play');
                                   }
@@ -1604,5 +1630,9 @@ class BankB2ClassState extends State<BankB2Class> {
             ),
           )),
     );
+  }
+
+  Dummy() {
+    Get.offAll(BankB2Class(), arguments: arguments);
   }
 }

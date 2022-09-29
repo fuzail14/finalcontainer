@@ -1,13 +1,11 @@
 import 'dart:async';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:finalcontainer/bankb.dart';
 import 'package:finalcontainer/bankb2.dart';
 import 'package:finalcontainer/containers_class.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:lite_rolling_switch/lite_rolling_switch.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BankA2Class extends StatefulWidget {
   const BankA2Class({Key? key}) : super(key: key);
@@ -31,7 +29,8 @@ class BankA2ClassState extends State<BankA2Class> {
   double min = 0;
   double sed = 0;
   List<int> i = [];
-  List<Map<String, dynamic>> data = [
+  List<Map<String, dynamic>> data =
+  [
     {
       "id": 1,
       "img1": "assets/img1.png",
@@ -1040,7 +1039,7 @@ class BankA2ClassState extends State<BankA2Class> {
   static AudioPlayer player = AudioPlayer();
   static AudioCache audioCache = AudioCache();
 
-  var dropdownvalue = '1.0';
+  // var dropdownvalue = '1.0';
 
   bool backgroundcolor = false;
   bool varr = false;
@@ -1081,6 +1080,7 @@ class BankA2ClassState extends State<BankA2Class> {
     "2.0"
   ];
 
+  String? MySharedDropDownValue;
   var textvalue = 'Bank A';
   @override
   void dispose() {
@@ -1092,7 +1092,21 @@ class BankA2ClassState extends State<BankA2Class> {
   void initState() {
     super.initState();
 
-    //getData();
+
+    getData();
+  }
+  getData() async
+  {
+    final prefs = await SharedPreferences.getInstance();
+    double? decimals = prefs.getDouble('dropdownvalue');
+    if (decimals==null)
+  {
+    prefs.setDouble('dropdownvalue', 1.0);
+  }
+    MySharedDropDownValue = decimals.toString();
+    setState(() {
+
+    });
   }
 
   bool ismusic = true;
@@ -1111,7 +1125,7 @@ class BankA2ClassState extends State<BankA2Class> {
           appBar: AppBar(
             actions: [
               DropdownButton(
-                value: dropdownvalue,
+                value: MySharedDropDownValue,
                 icon: const Icon(Icons.keyboard_arrow_down),
                 items: items.map((String items) {
                   return DropdownMenuItem(
@@ -1120,9 +1134,18 @@ class BankA2ClassState extends State<BankA2Class> {
                           ? Text(items, style: TextStyle(color: Colors.green))
                           : Text(items));
                 }).toList(),
-                onChanged: (String? newValue) {
+                onChanged: (String? newValue)
+                async {
+
                   setState(() {
-                    dropdownvalue = newValue!;
+
+
+
+
+                    MySharedDropDownValue  = newValue!;
+
+
+
                   });
                 },
               ),
@@ -1185,29 +1208,7 @@ class BankA2ClassState extends State<BankA2Class> {
                   ),
                 ),
 
-                // LiteRollingSwitch(
-                //   value: true,
-                //   width: MediaQuery.of(context).size.width * 0.250,
-                //   textOn: 'BankB',
-                //   textOff: 'BankA',
-                //   colorOn: Colors.cyan,
-                //   colorOff: Colors.grey,
-                //   // iconOn: Icons.dark_mode,
-                //   // iconOff: Icons.light_mode,
 
-                //   animationDuration: Duration(milliseconds: 800),
-                //   onChanged: (bool state) {
-                //     print('turned ${(state) ? 'BankB' : 'BankA'}');
-                //     setState(() {
-                //       bank = state;
-                //       Get.to(ContainersClass());
-
-                //     });
-                //   },
-                //   onTap: () {},
-                //   onDoubleTap: () {},
-                //   onSwipe: () {},
-                // ),
 
                 GestureDetector(
                   onTap: () {
@@ -1258,26 +1259,7 @@ class BankA2ClassState extends State<BankA2Class> {
                   ),
                 ),
 
-                // LiteRollingSwitch(
-                //   width: MediaQuery.of(context).size.width * 0.250,
-                //   textOn: 'Mode',
-                //   textOff: 'Mode',
-                //   colorOn: Colors.cyan,
-                //   colorOff: Colors.grey,
-                //   iconOn: Icons.dark_mode,
-                //   iconOff: Icons.light_mode,
-                //   animationDuration: Duration(milliseconds: 800),
-                //   onChanged: (bool state) {
-                //     print('turned ${(state) ? 'Bank B' : 'Bank A'}');
-                //     setState(() {
-                //       isTheme = state;
-                //       Get.to(BankBClass());
-                //     });
-                //   },
-                //   onTap: () {},
-                //   onDoubleTap: () {},
-                //   onSwipe: () {},
-                // ),
+
               ],
             ),
             leading: isTheme
@@ -1313,137 +1295,7 @@ class BankA2ClassState extends State<BankA2Class> {
                             newa2.add(false);
                           }
 
-                          // if (isTheme == true) {
-                          //   print('we are in bank b');
-                          //   return GestureDetector(
-                          //       onTap: () {
-                          //         print('data2   $data');
 
-                          //         newa.clear();
-
-                          //         for (int i = 0; i < data2.length; i++) {
-                          //           newa.add(false);
-                          //         }
-
-                          //         //setState(() {});
-
-                          //         print("-----------");
-                          //         print(date.millisecond);
-                          //         print("-----------");
-                          //         data2[index]['selection'] =
-                          //             !data2[index]['selection'];
-                          //         if (data2[index]['selection']) {
-                          //           if (bank==false) {
-                          //             print('bank A ki Audio....');
-
-                          //             newa[index] = data2[index]['selection'];
-
-                          //             print(newa[index]);
-                          //             print(newa);
-                          //             print(newa.length);
-                          //             newa.removeWhere((element) => false);
-
-                          //             setState(() {});
-
-                          //             // player.pause();
-                          //             var path =
-                          //                 'assets/' + data2[index]['bankaudio1'];
-                          //             print(path);
-
-                          //             player.play(AssetSource(
-                          //                 data2[index]['bankaudio1']));
-
-                          //             var speedofsong =
-                          //                 double.parse(dropdownvalue);
-                          //             player.setPlaybackRate(speedofsong);
-
-                          //             print('play');
-
-                          //           }
-
-                          //           else{
-
-                          //             print('bank B ki Audio....');
-
-                          //             newa[index] = data2[index]['selection'];
-
-                          //             print(newa[index]);
-                          //             print(newa);
-                          //             print(newa.length);
-                          //             newa.removeWhere((element) => false);
-
-                          //             setState(() {});
-
-                          //             // player.pause();
-                          //             var path =
-                          //                 'assets/' + data2[index]['bankaudio2'];
-                          //             print(path);
-
-                          //             player.play(AssetSource(
-                          //                 data2[index]['bankaudio2']));
-
-                          //             var speedofsong =
-                          //                 double.parse(dropdownvalue);
-                          //             player.setPlaybackRate(speedofsong);
-
-                          //             print('play');
-
-                          //           }
-
-                          //         } else if (!data2[index]['selection2']) {
-                          //           newa[index] = false;
-
-                          //           player.dispose();
-
-                          //           // dispose();
-                          //         }
-                          //       },
-                          //       child: Stack(
-                          //         children: [
-                          //           if (isTheme) ...[
-                          //             Container(
-                          //               child: Image.asset(
-                          //                 data2[index]['img1'].toString().trim(),
-                          //               ),
-                          //             ),
-                          //             newa[index]
-                          //                 ? Image.asset(
-                          //                     data2[index]['gold']
-                          //                         .toString()
-                          //                         .trim(),
-                          //                   )
-                          //                 : Container()
-                          //           ]
-
-                          //           // else ...[
-                          //           //   Container(
-                          //           //     child: Image.asset(
-                          //           //       data[index]['img2']
-                          //           //           .toString()
-                          //           //           .trim(),
-                          //           //     ),
-                          //           //   ),
-                          //           //   data[index]['selection']
-                          //           //       ? Image.asset(
-                          //           //           data[index]['blue']
-                          //           //               .toString()
-                          //           //               .trim(),
-                          //           //         )
-                          //           //       : Container()
-                          //           // ]
-
-                          //           //BLUE LINE
-                          //           // Positioned(
-                          //           //   left:pos,
-                          //           //   child:data[index]['selection']? Container(
-                          //           //     width: 3,height: MediaQuery.of(context).size.height*0.19,color: Colors.blue,
-                          //           //   ):Container(),
-                          //           //   // left: data[index]['selection']
-                          //           //   //     ? pos : 0,
-                          //           // )
-                          //         ],
-                          //       ));
-                          // }
                           return GestureDetector(
                               onTap: () async {
                                 newa.clear();
@@ -1491,7 +1343,8 @@ class BankA2ClassState extends State<BankA2Class> {
                                         AssetSource(data[index]['bankaudio2']));
 
                                     var speedofsong =
-                                        double.parse(dropdownvalue);
+                                        double.parse(MySharedDropDownValue!);
+
                                     player.setPlaybackRate(speedofsong);
 
                                     print('play');
@@ -1523,10 +1376,14 @@ class BankA2ClassState extends State<BankA2Class> {
                                         AssetSource(data[index]['bankaudio1']));
 
                                     var speedofsong =
-                                        double.parse(dropdownvalue);
+                                        double.parse(MySharedDropDownValue!);
                                     player.setPlaybackRate(speedofsong);
 
                                     setState(() {});
+
+                                    final prefs = await SharedPreferences.getInstance();
+                                    final double? decimal = prefs.getDouble('decimal');
+                                    print("share prefences val ${decimal}");
 
                                     Timer(Duration(milliseconds: 600), Dummy);
 
@@ -1640,7 +1497,11 @@ class BankA2ClassState extends State<BankA2Class> {
     );
   }
 
-  Dummy() {
+  Dummy() async{
+    // Obtain shared preferences.
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble('dropdownvalue', double.parse(MySharedDropDownValue!) );
+
     Get.offAll(BankA2Class());
   }
 }

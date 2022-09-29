@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BankBClass extends StatefulWidget {
   const BankBClass({Key? key}) : super(key: key);
@@ -1040,8 +1041,8 @@ class _BankBClassState extends State<BankBClass> {
   static AudioPlayer player = AudioPlayer();
   static AudioCache audioCache = AudioCache();
 
-  var dropdownvalue = '1.0';
-
+  // var dropdownvalue = '1.0';
+  String? MySharedDropDownValue;
   bool backgroundcolor = false;
   bool varr = false;
   List<bool> newa = [];
@@ -1091,7 +1092,18 @@ class _BankBClassState extends State<BankBClass> {
   void initState() {
     super.initState();
 
-    //getData();
+    getData();
+  }
+
+  getData() async {
+    final prefs = await SharedPreferences.getInstance();
+    double? decimals = prefs.getDouble('dropdownvalue');
+    if (decimals==null)
+  {
+    prefs.setDouble('dropdownvalue', 1.0);
+  }
+    MySharedDropDownValue = decimals.toString();
+    setState(() {});
   }
 
   var arguments = Get.arguments;
@@ -1102,12 +1114,9 @@ class _BankBClassState extends State<BankBClass> {
   var icon;
   var text;
   var color;
-  
 
   @override
   Widget build(BuildContext context) {
-    
-    
     bank = arguments[0];
     iconposition = arguments[1];
     icon = arguments[2];
@@ -1119,17 +1128,16 @@ class _BankBClassState extends State<BankBClass> {
     //   Get.to(BankB2Class(),arguments: [bank,iconposition,icon,text,color]);
     // }
     // else
-    
-    
+
     print('bankbbbbb $bank');
-    
+
     return SafeArea(
       child: Scaffold(
           backgroundColor: isTheme ? Colors.black : Colors.white,
           appBar: AppBar(
             actions: [
               DropdownButton(
-                value: dropdownvalue,
+                value: MySharedDropDownValue,
                 icon: const Icon(
                   Icons.keyboard_arrow_down,
                 ),
@@ -1142,7 +1150,7 @@ class _BankBClassState extends State<BankBClass> {
                 }).toList(),
                 onChanged: (String? newValue) {
                   setState(() {
-                    dropdownvalue = newValue!;
+                    MySharedDropDownValue = newValue!;
                   });
                 },
               ),
@@ -1150,19 +1158,18 @@ class _BankBClassState extends State<BankBClass> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                  Column(
+                Column(
                   children: [
                     Text(
                       'PMØS',
                       style: TextStyle(color: Colors.black),
                     ),
-                      Text(
+                    Text(
                       '_100™️',
                       style: TextStyle(color: Colors.black),
                     ),
                   ],
                 ),
-              
 
                 GestureDetector(
                   onTap: () {
@@ -1188,7 +1195,6 @@ class _BankBClassState extends State<BankBClass> {
                                 borderRadius: BorderRadius.circular(100)),
                             child: Icon(
                               icon,
-                              
                             ),
                           )),
                       Positioned(
@@ -1232,7 +1238,8 @@ class _BankBClassState extends State<BankBClass> {
                 GestureDetector(
                   onTap: () {
                     isTheme = true;
-                    Get.to(ContainersClass(), arguments: [bank, iconposition, icon, text, color]);
+                    Get.to(ContainersClass(),
+                        arguments: [bank, iconposition, icon, text, color]);
                   },
                   child: Stack(
                     children: [
@@ -1244,7 +1251,7 @@ class _BankBClassState extends State<BankBClass> {
                             color: Colors.black),
                       ),
                       Positioned(
-                         right: MediaQuery.of(context).size.width * 0.025,
+                          right: MediaQuery.of(context).size.width * 0.025,
                           top: MediaQuery.of(context).size.height * 0.014,
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.050,
@@ -1254,7 +1261,6 @@ class _BankBClassState extends State<BankBClass> {
                                 borderRadius: BorderRadius.circular(100)),
                             child: Icon(
                               Icons.dark_mode,
-                              
                             ),
                           )),
                       Positioned(
@@ -1376,15 +1382,12 @@ class _BankBClassState extends State<BankBClass> {
                                         data2[index]['bankaudio1']));
 
                                     var speedofsong =
-                                        double.parse(dropdownvalue);
+                                        double.parse(MySharedDropDownValue!);
                                     player.setPlaybackRate(speedofsong);
 
-                                    setState(() {
-                                      
-                                    });
+                                    setState(() {});
 
-                                      Timer(Duration(milliseconds: 600),  Dummy);
-                                        
+                                    Timer(Duration(milliseconds: 600), Dummy);
 
                                     print('play');
                                   } else {
@@ -1415,17 +1418,12 @@ class _BankBClassState extends State<BankBClass> {
                                         data2[index]['bankaudio2']));
 
                                     var speedofsong =
-                                        double.parse(dropdownvalue);
+                                        double.parse(MySharedDropDownValue!);
                                     player.setPlaybackRate(speedofsong);
 
-                                    setState(() {
-                                      
-                                    });
- 
+                                    setState(() {});
 
-                                      Timer(Duration(milliseconds: 400),  Dummy);
-
-                                        
+                                    Timer(Duration(milliseconds: 400), Dummy);
 
                                     print('play');
                                   }
@@ -1656,8 +1654,11 @@ class _BankBClassState extends State<BankBClass> {
     );
   }
 
-  Dummy(){
+  Dummy() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble(
+        'dropdownvalue', double.parse(MySharedDropDownValue!));
 
-    Get.offAll(BankBClass(),arguments: arguments);
+    Get.offAll(BankBClass(), arguments: arguments);
   }
 }

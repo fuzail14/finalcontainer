@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BankB2Class extends StatefulWidget {
   const BankB2Class({Key? key}) : super(key: key);
@@ -1041,8 +1042,8 @@ class BankB2ClassState extends State<BankB2Class> {
   static AudioPlayer player = AudioPlayer();
   static AudioCache audioCache = AudioCache();
 
-  var dropdownvalue = '1.0';
-
+  // var dropdownvalue = '1.0';
+  String? MySharedDropDownValue;
   bool backgroundcolor = false;
   bool varr = false;
   List<bool> newa = [];
@@ -1092,7 +1093,20 @@ class BankB2ClassState extends State<BankB2Class> {
   void initState() {
     super.initState();
 
-    //getData();
+    getData();
+  }
+  getData() async
+  {
+    final prefs = await SharedPreferences.getInstance();
+    double? decimals = prefs.getDouble('dropdownvalue');
+    if (decimals==null)
+  {
+    prefs.setDouble('dropdownvalue', 1.0);
+  }
+    MySharedDropDownValue = decimals.toString();
+    setState(() {
+
+    });
   }
 
   bool ismusic = true;
@@ -1108,7 +1122,7 @@ class BankB2ClassState extends State<BankB2Class> {
           appBar: AppBar(
             actions: [
               DropdownButton(
-                value: dropdownvalue,
+                value: MySharedDropDownValue,
                 icon: const Icon(
                   Icons.keyboard_arrow_down,
                 ),
@@ -1121,7 +1135,7 @@ class BankB2ClassState extends State<BankB2Class> {
                 }).toList(),
                 onChanged: (String? newValue) {
                   setState(() {
-                    dropdownvalue = newValue!;
+                   MySharedDropDownValue = newValue!;
                   });
                 },
               ),
@@ -1362,7 +1376,7 @@ class BankB2ClassState extends State<BankB2Class> {
                                         data2[index]['bankaudio1']));
 
                                     var speedofsong =
-                                        double.parse(dropdownvalue);
+                                        double.parse(MySharedDropDownValue!);
                                     player.setPlaybackRate(speedofsong);
 
                                     setState(() {});
@@ -1397,7 +1411,7 @@ class BankB2ClassState extends State<BankB2Class> {
                                         data2[index]['bankaudio2']));
 
                                     var speedofsong =
-                                        double.parse(dropdownvalue);
+                                        double.parse(MySharedDropDownValue!);
                                     player.setPlaybackRate(speedofsong);
 
                                     setState(() {});
@@ -1632,7 +1646,10 @@ class BankB2ClassState extends State<BankB2Class> {
     );
   }
 
-  Dummy() {
+  Dummy() async{
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble('dropdownvalue', double.parse(MySharedDropDownValue!) );
+
     Get.offAll(BankB2Class(), arguments: arguments);
   }
 }
